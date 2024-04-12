@@ -4,24 +4,6 @@ module OpenAPI
     # Converts an OpenAPI/JSON schema type to a Grape parameter type
     #
     class ParamType
-      OBJECT_TYPE = JSON
-
-      GRAPE_TYPE_MAP = {
-        "string" => String,
-        "integer" => Integer,
-        "number" => Float,
-        "boolean" => ::Grape::API::Boolean,
-        "array" => Array,
-        "object" => OBJECT_TYPE,
-        "null" => nil
-      }.freeze
-
-      GRAPE_STRING_FORMAT_MAP = {
-        "date-time" => DateTime,
-        "date" => Date,
-        "time" => Time
-      }.freeze
-
       # @return [Class, Array<Class>] the Grape type corresponding to the given OpenAPI/JSON schema
       def self.call(schema:, default: String)
         return default unless schema.present?

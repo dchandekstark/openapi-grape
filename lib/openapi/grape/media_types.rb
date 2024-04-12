@@ -12,7 +12,7 @@ module OpenAPI
       def self.call(base_path:)
         Set.new.tap do |media_types|
           PathFilter.call(base_path:).each_value do |path_item|
-            path_item.slice(*Router::HTTP_METHODS).each_value do |operation|
+            path_item.slice(*HTTP_METHODS).each_value do |operation|
               operation.fetch("responses", {}).each_value do |response|
                 media_types.merge response.fetch("content", {}).keys
               end

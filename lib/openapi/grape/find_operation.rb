@@ -9,7 +9,7 @@ module OpenAPI
       # @param http_methods [Array<String>] HTTP methods to search through
       # @return [Hash] operation details
       # @raise [OpenAPI::Grape::Error] if operation not found
-      def self.call(doc:, operation_id:, http_methods: Router::HTTP_METHODS)
+      def self.call(doc:, operation_id:, http_methods: HTTP_METHODS)
         doc.fetch("paths").each do |path, path_item|
           path_item.slice(*http_methods).each do |http_method, operation|
             return { path:, http_method:, operation: } if operation.fetch("operationId") == operation_id

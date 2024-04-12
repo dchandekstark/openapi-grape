@@ -5,15 +5,13 @@ require "yaml"
 module OpenAPI
   module Grape
     class RefResolver
-      MAX_DEPTH = 10 # max depth to resolve refs, to prevent infinite loops
-
       # @param ref [String]
       # @param doc [Hash] a JSON schema or OpenAPI document
       # @return [Hash] the resolved reference
       def self.call(ref:, doc:, depth: 0)
         return doc if ref.blank?
 
-        raise "Max depth exceeded resolving ref: #{ref}" if depth > MAX_DEPTH
+        raise "Max depth exceeded resolving ref: #{ref}" if depth > REF_RESOLVER_MAX_DEPTH
 
         # Local doc ref
         if m = %r{^\#/(.*)}.match(ref)

@@ -3,7 +3,6 @@ require "uri"
 module OpenAPI
   module Grape
     class Router
-      HTTP_METHODS = %w[get put post delete patch].freeze
 
       attr_reader :api, :doc, :base_path
 
