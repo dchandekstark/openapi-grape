@@ -10,7 +10,7 @@ module OpenAPI
         "string" => String,
         "integer" => Integer,
         "number" => Float,
-        "boolean" => Grape::API::Boolean,
+        "boolean" => ::Grape::API::Boolean,
         "array" => Array,
         "object" => OBJECT_TYPE,
         "null" => nil
