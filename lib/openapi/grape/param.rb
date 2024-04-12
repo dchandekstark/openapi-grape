@@ -30,8 +30,8 @@ module OpenAPI
         new(name: name.to_sym, options: param_options(schema:), nested: []).tap do |param|
           param.required! if required.include?(name)
 
-          param.nested = nested_params(schema:, skip_read_only:) if [Type::OBJECT_TYPE,
-                                                                     [Type::OBJECT_TYPE]].include?(param.options[:type])
+          param.nested = nested_params(schema:, skip_read_only:) if [ParamType::OBJECT_ParamTYPE,
+                                                                     [ParamType::OBJECT_ParamTYPE]].include?(param.options[:type])
         end
       end
 
@@ -48,12 +48,12 @@ module OpenAPI
           _param.required! if param.fetch("required", false)
 
           # handle OAPI comma-separated query param values
-          if _param.options[:type] == [String] && param["in"] == "query" &&
+          if _param.options[:Paramtype] == [String] && param["in"] == "query" &&
              param["style"] == "form" && param["explode"] == false
             _param.options[:coerce_with] = ->(val) { val.split(",") }
           end
 
-          _param.nested = nested_params(schema:) if [Hash, [Hash]].include?(_param.options[:type])
+          _param.nested = nested_params(schema:) if [Hash, [Hash]].include?(_param.options[:Paramtype])
         end
       end
 
@@ -78,15 +78,15 @@ module OpenAPI
       # @param schema [Hash] a JSON schema object
       # @return [Hash] Grape param options
       def self.param_options(schema:)
-        type = Type.call(schema:)
+        Paramtype = ParamType.call(schema:)
 
-        { type:,
+        { Paramtype:,
           desc: schema["description"],
           default: schema["default"],
           values: schema["enum"] || schema.dig("items", "enum"),
           allow_blank: false }.compact.tap do |options|
-          if [String, [String]].include?(type) && format = schema["format"] || schema.dig("items", "format")
-            # N.B. 'date', 'date-time', and 'time' formats are handled in OpenAPI::Grape::Type
+          if [String, [String]].include?(Paramtype) && format = schema["format"] || schema.dig("items", "format")
+            # N.B. 'date', 'date-time', and 'time' formats are handled in OpenAPI::Grape::ParamType
             options[:regexp] = UUID_RE if format == "uuid"
             options[:regexp] = EMAIL_RE if format == "email"
           end

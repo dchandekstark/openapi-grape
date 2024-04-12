@@ -12,3 +12,5 @@ module OpenAPI
     PathFilter = ->(doc:, base_path:) { doc.fetch("paths").select { |key, _| key.start_with?(base_path) } }
   end
 end
+
+require_relative "grape/param_type"
