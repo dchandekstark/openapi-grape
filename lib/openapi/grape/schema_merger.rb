@@ -1,5 +1,3 @@
-require "openapi/grape/ref_resolver"
-
 module OpenAPI
   module Grape
     class SchemaMerger

@@ -35,9 +35,9 @@ module OpenAPI
         properties = schema.fetch("properties", {}).reject { |_, prop| prop.fetch("readOnly", false) }
         return [] if properties.empty?
 
-        type = Type.call(schema:)
+        type = ParamType.call(schema:)
 
-        if content_type == "application/json" && type != Type::OBJECT_TYPE
+        if content_type == "application/json" && type != OBJECT_TYPE
           raise NotImplementedError,
                 "Unsupported JSON request body schema type: #{type.inspect}"
         end
