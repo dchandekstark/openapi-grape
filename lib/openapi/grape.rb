@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 require_relative "grape/version"
+require "grape"
 
-module Openapi
+module OpenAPI
   module Grape
     class Error < StandardError; end
-    # Your code goes here...
+
+    Path = ->(path:) { path.gsub(/\{([^}]+)\}/, ':\1') }
+
+    PathFilter = ->(doc:, base_path:) { doc.fetch("paths").select { |key, _| key.start_with?(base_path) } }
   end
 end
